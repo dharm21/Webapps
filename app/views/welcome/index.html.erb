@@ -1,0 +1,36 @@
+<div id="new_message"></div>
+<div class="col-md-4">
+  <div class="well">
+    <table class="table">
+      <th>contacts</th>
+      <tr>
+        <th>sr no.</th>
+        <th>email</th>
+        <th>create message</th>
+      </tr>
+
+      <%@members.each_with_index do |member, index| %>
+        <% if member !=(current_member)%>
+          <tr>
+            <td><%= index = "#{index+1}" %></td><ul>
+            <td><%= member.email %></td>
+            <td><%= link_to  'Message', new_message_path(receiver_id: member.id)%>
+            </td>
+          
+            <% if Friendship.where(friend_id: current_member.id, member_id: member.id | current_member.id, member_id: member.id, accepted: false).empty?
+              #current_member.invite_friendships.where(friend_id: member.id).empty?  %>
+              <td><%= link_to  'send Request', friendships_path(friend_id: member.id, member_id: current_member.id), method: :post%></td>
+            <% elsif current_member.invite_friendships.where(friend_id: member.id, accepted: false).present? %>
+              <td>Request sent</td>
+            <% elsif current_member.invite_friendships.where(friend_id: current_member.id, accepted: false).present?%>
+              <%current_member.requested_friendships.each do |request| %>
+              <td><%= link_to  'Aceept Request', friendship_path(friend_id: member.id, accepted: true), method: :patch %></td>
+               <td><%= link_to  'Reject Request', friendship_path(friend_id: member.id), method: :destroy %></td> 
+              <%end%> 
+             <%end%>
+          </tr>
+        <%end%>
+      <%end%>
+    </table>
+  </div>
+</div>
