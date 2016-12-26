@@ -19,6 +19,7 @@ gem 'devise'
 gem 'responders'
 gem 'stripe'
 
+
 group :development, :test do
   gem 'byebug'
 end
