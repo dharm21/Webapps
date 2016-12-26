@@ -15,6 +15,7 @@ class FriendshipsController < ApplicationController
     @friendship = current_member.invite_friendships.build(friend_id: params[:friend_id], member_id: params[:member_id], accepted: false)
     if @friendship.save
       redirect_to root_url
+      
     end
   end
 
